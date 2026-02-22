@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major Projects | @MAJORCCEDITS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/majoredits51-lang/majorprojects.io/style.css">
+    <style id="dynamic-custom-css"></style>
+</head>
+<body>
+    <div id="bg-video-container"></div>
+
+    <nav class="main-tabs">
+        <button class="tab-link public-tab active" data-tab="projects">Projects</button>
+        <button class="tab-link public-tab" data-tab="plugins">Plugins</button>
+        <button class="tab-link public-tab" data-tab="softwares">Softwares</button>
+        
+        <button class="tab-link admin-tab" data-tab="admin-manage" style="display:none; color: var(--ui-primary-hex, #a855f7); border-bottom-color: var(--ui-primary-hex, #a855f7);">Manage Posts</button>
+        <button class="tab-link admin-tab" data-tab="admin-upload" style="display:none; color: var(--ui-primary-hex, #a855f7); border-bottom-color: var(--ui-primary-hex, #a855f7);">Upload</button>
+        <button class="tab-link admin-tab" data-tab="admin-code" style="display:none; color: var(--ui-primary-hex, #a855f7); border-bottom-color: var(--ui-primary-hex, #a855f7);">Site Settings</button>
+        
+        <button class="admin-tab" id="exit-admin-btn" style="display:none; margin-left: auto; background: transparent; border: none; color: #ef4444; font-weight: bold; font-size: 1rem; cursor: pointer; padding: 0.5rem 1rem;">Exit Admin</button>
+    </nav>
+
+    <header class="hero">
+        <h1>MAJOR PROJECTS</h1>
+        <p>The official hub for @MAJORCCEDITS</p>
+    </header>
+
+    <section id="projects" class="tab-content active">
+        <nav class="filters" id="dynamic-filters"></nav>
+        <main class="project-gallery" id="gallery"></main>
+    </section>
+
+    <section id="plugins" class="tab-content">
+        <div class="content-container">
+            <h2>Recommended Editing Plugins & Files</h2>
+            <p>Direct Google Drive links to the tools used to achieve the signature look.</p>
+            <div class="plugin-grid" id="plugin-grid"></div>
+        </div>
+    </section>
+
+    <section id="softwares" class="tab-content">
+        <div class="content-container">
+            <h2>Essential Software</h2>
+            <p>The core applications and programs recommended for editing.</p>
+            <div class="software-grid" id="software-grid"></div>
+        </div>
+    </section>
+
+    <section id="admin-manage" class="tab-content">
+        <div class="content-container">
+            <h2 style="color: var(--ui-primary-hex, #a855f7);">Admin Dashboard</h2>
+            <p>Edit or delete your database content in real-time.</p>
+            <div id="manage-list" class="manage-list"></div>
+        </div>
+    </section>
+
+    <section id="admin-upload" class="tab-content">
+        <div class="content-container">
+            <div class="admin-box" style="margin: 0 auto;">
+                <h2 id="form-title" style="color: var(--ui-primary-hex, #a855f7);">Upload New Asset</h2>
+                <p>Publish directly to the site.</p>
+                <form id="admin-form">
+                    <input type="hidden" id="edit-id">
+                    <select id="item-type" required>
+                        <option value="projects">Add to Projects</option>
+                        <option value="plugins">Add to Plugins</option>
+                        <option value="softwares">Add to Softwares</option>
+                    </select>
+                    <input type="text" id="item-name" placeholder="Name (e.g., Venom Edit .AEP)" required>
+                    <input type="text" id="item-tag" placeholder="Tag / Category (e.g., After Effects, Mod)">
+                    <input type="text" id="item-platform" placeholder="Platform (e.g., Windows, Mac, Web)" style="display:none;">
+                    <textarea id="item-caption" rows="3" placeholder="Enter a custom caption or description..." required></textarea>
+                    <input type="url" id="item-image" placeholder="Image Preview URL">
+                    <input type="text" id="item-button-text" placeholder="Button Text (e.g., Download .AEP)">
+                    <input type="url" id="item-video-url" placeholder="Video Link (e.g., YouTube URL for Preview)">
+                    <input type="url" id="item-url" placeholder="Download Link (Required)" required>
+                    <button type="submit" id="form-submit-btn" class="glow-btn" style="width: 100%; margin-top: 1rem;">Publish to Site</button>
+                    <button type="button" id="cancel-edit-btn" class="glow-btn" style="width: 100%; margin-top: 1rem; background: #333; border-color: #555; display: none;">Cancel Edit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="admin-code" class="tab-content">
+        <div class="content-container">
+            <div class="admin-box" style="margin: 0 auto; max-width: 800px;">
+                
+                <h2 style="color: var(--ui-primary-hex, #a855f7);">1. Master Background</h2>
+                <div style="background: rgba(13,13,18, 0.8); padding: 1.5rem; border-radius: 8px; border: 1px solid #333; margin-top: 1rem; margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <label><input type="radio" name="bg-type" value="solid" checked> Solid Color</label>
+                        <label><input type="radio" name="bg-type" value="gradient"> Gradient</label>
+                        <label><input type="radio" name="bg-type" value="image"> Image</label>
+                        <label><input type="radio" name="bg-type" value="video"> Video (MP4)</label>
+                    </div>
+
+                    <div id="solid-group">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Pick a color:</label><br>
+                        <input type="color" id="bg-solid-color" value="#0d0d12" style="width: 100%; height: 50px; cursor: pointer; border: none; background: transparent;">
+                    </div>
+
+                    <div id="gradient-group" style="display: none; gap: 1rem; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 45%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Color 1:</label><br><input type="color" id="bg-grad-1" value="#1a1a24" style="width: 100%; height: 50px; cursor: pointer; border: none; background: transparent;">
+                        </div>
+                        <div style="flex: 1; min-width: 45%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Color 2:</label><br><input type="color" id="bg-grad-2" value="#0d0d12" style="width: 100%; height: 50px; cursor: pointer; border: none; background: transparent;">
+                        </div>
+                        <div style="flex: 1; min-width: 100%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Gradient Angle: <span id="grad-angle-val">135</span>°</label>
+                            <input type="range" id="bg-grad-angle" min="0" max="360" value="135" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <div id="media-group" style="display: none;">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Media URL (Image or MP4):</label>
+                        <input type="url" id="bg-media-url" placeholder="https://..." style="width: 100%; padding: 0.8rem; background: #050505; border: 1px solid #333; color: #fff; border-radius: 4px; margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Media Opacity:</label>
+                        <input type="range" id="bg-media-opacity" min="0" max="1" step="0.05" value="1" style="width: 100%; margin-bottom: 1.5rem;">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Media Blur:</label>
+                        <input type="range" id="bg-media-blur" min="0" max="30" step="1" value="0" style="width: 100%; margin-bottom: 1.5rem;">
+                        <hr style="border-color: #333; margin: 1rem 0;">
+                        <h4 style="color: #a0a0b0; margin-bottom: 0.5rem;">Cinematic Gradient Overlay</h4>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="flex: 1;"><label style="font-size: 0.8rem;">Top Color:</label><br><input type="color" id="bg-overlay-1" value="#0d0d12" style="width: 100%; height: 40px; border: none; background: transparent;"></div>
+                            <div style="flex: 1;"><label style="font-size: 0.8rem;">Bottom Color:</label><br><input type="color" id="bg-overlay-2" value="#a855f7" style="width: 100%; height: 40px; border: none; background: transparent;"></div>
+                        </div>
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Overlay Opacity:</label>
+                        <input type="range" id="bg-overlay-opacity" min="0" max="1" step="0.05" value="0" style="width: 100%;">
+                    </div>
+                </div>
+
+                <h2 style="color: var(--ui-primary-hex, #a855f7);">2. UI Styling & Animations</h2>
+                <div style="background: rgba(13,13,18, 0.8); padding: 1.5rem; border-radius: 8px; border: 1px solid #333; margin-top: 1rem;">
+                    
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Global Typography (Google Fonts)</h4>
+                    <select id="site-font-preset" style="width: 100%; padding: 1rem; background: #050505; border: 1px solid #333; color: #fff; border-radius: 4px; font-size: 1rem; margin-bottom: 1.5rem; cursor: pointer;">
+                        <option value="Segoe UI">Default Base (Segoe UI)</option>
+                        <option value="Roboto">Roboto</option>
+                        <option value="Open Sans">Open Sans</option>
+                        <option value="Lato">Lato</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Inter">Inter</option>
+                        <option value="Oswald">Oswald</option>
+                        <option value="Raleway">Raleway</option>
+                        <option value="Nunito">Nunito</option>
+                        <option value="Ubuntu">Ubuntu</option>
+                        <option value="Playfair Display">Playfair Display</option>
+                        <option value="Rubik">Rubik</option>
+                        <option value="Merriweather">Merriweather</option>
+                        <option value="PT Sans">PT Sans</option>
+                        <option value="Noto Sans">Noto Sans</option>
+                        <option value="Work Sans">Work Sans</option>
+                        <option value="Fira Sans">Fira Sans</option>
+                        <option value="Quicksand">Quicksand</option>
+                        <option value="Mukta">Mukta</option>
+                        <option value="Titillium Web">Titillium Web</option>
+                        <option value="Varela Round">Varela Round</option>
+                        <option value="Space Grotesk">Space Grotesk</option>
+                        <option value="Bebas Neue">Bebas Neue</option>
+                        <option value="Josefin Sans">Josefin Sans</option>
+                        <option value="Anton">Anton</option>
+                        <option value="Righteous">Righteous</option>
+                        <option value="Orbitron">Orbitron</option>
+                        <option value="Cinzel">Cinzel</option>
+                        <option value="Pacifico">Pacifico</option>
+                        <option value="Syne">Syne</option>
+                    </select>
+
+                    <hr style="border-color: #333; margin: 1.5rem 0;">
+
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Navigation Tabs Style</h4>
+                    <select id="ui-tab-preset" style="width: 100%; padding: 1rem; background: #050505; border: 1px solid #333; color: #fff; border-radius: 4px; font-size: 1rem; margin-bottom: 1rem; cursor: pointer;">
+                        <option value="tab-underline">Modern Underline (Classic)</option>
+                        <option value="tab-box">Solid Box Button (Classic)</option>
+                        <option value="tab-pill">Smooth Pill Capsule</option>
+                        <option value="tab-bracket">Cyber Brackets [ ]</option>
+                        <option value="tab-dot">Bouncing Dot Pulse</option>
+                        <option value="tab-fill-diag">Speed Fill (Diagonal)</option>
+                        <option value="tab-border-draw">Animated Border Draw</option>
+                        <option value="tab-glow-pulse">Neon Text Aura</option>
+                        <option value="tab-overline">Top Line Drop</option>
+                        <option value="tab-slash">Terminal Slashes //</option>
+                        <option value="tab-lift">3D Float Lift</option>
+                        <option value="tab-chevron">Code Chevrons &lt; &gt; </option>
+                        <option value="tab-glitch">RGB Glitch Shift</option>
+                        <option value="tab-neon-block">Solid Neon Illuminator</option>
+                    </select>
+                    
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="tab-glass-toggle"> Frosted Tab Background (Applies to shapes)</label>
+                        <label style="display:flex; align-items:center; gap:0.5rem;"><input type="checkbox" id="tab-glow-toggle"> Glowing Tab Shadow</label>
+                    </div>
+
+                    <hr style="border-color: #333; margin: 1.5rem 0;">
+
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Card Entrance Animation</h4>
+                    <select id="ui-animation-preset" style="width: 100%; padding: 1rem; background: #050505; border: 1px solid #333; color: #fff; border-radius: 4px; font-size: 1rem; margin-bottom: 1.5rem; cursor: pointer;">
+                        <option value="anim-fade-down">Fade Down (Classic)</option>
+                        <option value="anim-fade-up">Fade Up</option>
+                        <option value="anim-slide-left">Slide In Left</option>
+                        <option value="anim-slide-right">Slide In Right</option>
+                        <option value="anim-zoom-in">Zoom In (Scale Up)</option>
+                        <option value="anim-zoom-out">Zoom Out (Scale Down)</option>
+                        <option value="anim-flip-x">3D Flip X</option>
+                        <option value="anim-flip-y">3D Flip Y</option>
+                        <option value="anim-blur-in">Blur In (Focus)</option>
+                        <option value="anim-bounce">Bounce Pop</option>
+                        <option value="anim-swing">Swing Drop</option>
+                        <option value="anim-spin-in">Spin & Scale In</option>
+                    </select>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Entrance Animation Duration: <span id="anim-duration-val">0.6</span>s</label>
+                        <input type="range" id="ui-animation-duration" min="0.1" max="3" step="0.1" value="0.6" style="width: 100%;">
+                    </div>
+
+                    <hr style="border-color: #333; margin: 1.5rem 0;">
+
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Button Style & Hover Effects</h4>
+                    <select id="ui-btn-preset" style="width: 100%; padding: 1rem; background: #050505; border: 1px solid #333; color: #fff; border-radius: 4px; font-size: 1rem; margin-bottom: 1.5rem; cursor: pointer;">
+                        <option value="btn-neon">Classic Neon (Expand & Glow)</option>
+                        <option value="btn-apple">Apple Intelligence (Multi-Color Blur)</option>
+                        <option value="btn-ghost">Ghost Glass (Frosted & Inner Glow)</option>
+                        <option value="btn-cyber">Cyberpunk (Sharp Shadow Shift)</option>
+                        <option value="btn-liquid">Liquid Fill (Bottom Up)</option>
+                        <option value="btn-holo">Holographic Sweep (Shiny Light)</option>
+                        <option value="btn-breathe">Breathing Aura (Constant Pulse)</option>
+                        <option value="btn-pulse">Sonar Ping (Expanding Rings)</option>
+                        <option value="btn-plasma">Plasma Shift (Animated Gradient)</option>
+                        <option value="btn-spin">Neon Outline Spin (Rotating Border)</option>
+                        <option value="btn-3d">3D Float (Chunky Click)</option>
+                        <option value="btn-echo">Echo Drop (Fade Out Shadow)</option>
+                    </select>
+
+                    <hr style="border-color: #333; margin: 1.5rem 0;">
+
+                    <h4 style="color: #fff; margin-bottom: 0.5rem;">Global Colors & Glass</h4>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <div style="flex: 1; min-width: 45%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Primary Color (Borders, Solid Fills):</label><br>
+                            <input type="color" id="ui-primary-color" value="#a855f7" style="width: 100%; height: 50px; cursor: pointer; border: none; background: transparent;">
+                        </div>
+                        <div style="flex: 1; min-width: 45%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Glow Color (Shadows, Auras):</label><br>
+                            <input type="color" id="ui-glow-color" value="#a855f7" style="width: 100%; height: 50px; cursor: pointer; border: none; background: transparent;">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="checkbox" id="bg-glass-toggle" style="width: 18px; height: 18px;">
+                        <label for="bg-glass-toggle" style="color: #f1f1f1;">Enable Glass Morphism (Frosted boxes)</label>
+                    </div>
+                    <div id="glass-blur-group" style="display: none; margin-bottom: 1.5rem;">
+                        <label style="color: #a0a0b0; font-size: 0.9rem;">Glass Blur Intensity: <span id="glass-blur-val">15</span>px</label>
+                        <input type="range" id="bg-glass-blur" min="2" max="50" step="1" value="15" style="width: 100%;">
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="checkbox" id="ui-glow-toggle" style="width: 18px; height: 18px;">
+                        <label for="ui-glow-toggle" style="color: #f1f1f1;">Enable Card Outer Glow</label>
+                    </div>
+                    
+                    <div id="ui-glow-group" style="display: none; gap: 1rem; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 100%;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Glow Intensity (Spread):</label>
+                            <input type="range" id="ui-glow-spread" min="5" max="50" step="1" value="20" style="width: 100%; margin-bottom: 0.5rem;">
+                            <label style="color: #a0a0b0; font-size: 0.9rem;">Glow Opacity:</label>
+                            <input type="range" id="ui-glow-opacity" min="0.1" max="1" step="0.1" value="0.4" style="width: 100%; margin-bottom: 1rem;">
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #333; margin: 1.5rem 0;">
+                    
+                    <div class="gradient-toggle-wrapper">
+                        <input type="checkbox" id="site-gradient-toggle" class="gradient-toggle">
+                        <label for="site-gradient-toggle" style="color: #f1f1f1; font-weight: bold; cursor: pointer;">Enable Animated RGB Glow</label>
+                    </div>
+                    
+                    <div id="rgb-colors-group" style="display: none; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <div style="flex: 1; min-width: 30%;">
+                            <label style="color: #a0a0b0; font-size: 0.8rem;">RGB Color 1:</label><br>
+                            <input type="color" id="rgb-color-1" value="#ff007f" style="width: 100%; height: 40px; border: none; background: transparent; cursor: pointer;">
+                        </div>
+                        <div style="flex: 1; min-width: 30%;">
+                            <label style="color: #a0a0b0; font-size: 0.8rem;">RGB Color 2:</label><br>
+                            <input type="color" id="rgb-color-2" value="#a855f7" style="width: 100%; height: 40px; border: none; background: transparent; cursor: pointer;">
+                        </div>
+                        <div style="flex: 1; min-width: 30%;">
+                            <label style="color: #a0a0b0; font-size: 0.8rem;">RGB Color 3:</label><br>
+                            <input type="color" id="rgb-color-3" value="#00ffff" style="width: 100%; height: 40px; border: none; background: transparent; cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <button id="save-bg-btn" class="glow-btn" style="width: 100%; margin-top: 2rem;">Apply Visual Settings</button>
+                </div>
+
+                <hr style="border-color: #333; margin: 3rem 0;">
+                <h2 style="color: var(--ui-primary-hex, #a855f7);">3. Live Code Editor</h2>
+                <textarea id="live-code-editor" spellcheck="false" style="width: 100%; height: 300px; background: #050505; color: #4ade80; font-family: monospace; font-size: 0.9rem; padding: 1rem; border: 1px solid #333; border-radius: 4px; margin-top: 1rem;"></textarea>
+                <button id="save-code-btn" class="glow-btn" style="width: 100%; margin-top: 1rem;">Save & Inject Code</button>
+
+                <hr style="border-color: #333; margin: 3rem 0;">
+                <h2 style="color: var(--ui-primary-hex, #a855f7);">Security Settings</h2>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="new-admin-password" placeholder="Enter new password..." style="flex: 1; min-width: 250px; padding: 1rem; background: #0d0d12; border: 1px solid #333; color: #fff; border-radius: 4px; font-size: 1rem;">
+                    <button id="update-password-btn" class="glow-btn" style="background: #2a2a36; border-color: #4a4a5e;">Update Password</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="password-modal" class="modal-overlay">
+        <div class="admin-box" style="max-width: 400px; text-align: center;">
+            <button id="close-password">✕</button>
+            <h2>Restricted Access</h2>
+            <p>Enter the admin password to continue.</p>
+            <form id="password-form">
+                <input type="password" id="admin-password" placeholder="Enter Password" required style="width: 100%; margin: 1.5rem 0;">
+                <button type="submit" id="login-submit-btn" class="glow-btn" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgud44WcaCR8GX5oGhwt1dGz2RxpZ3LtA",
+            authDomain: "major-projects-fb563.firebaseapp.com",
+            projectId: "major-projects-fb563",
+            storageBucket: "major-projects-fb563.firebasestorage.app",
+            messagingSenderId: "407257727516",
+            appId: "1:407257727516:web:1053e490bb1973568915d9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let allData = { projects: [], plugins: [], softwares: [] };
+        
+        const btnPresetsArray = ['btn-neon', 'btn-apple', 'btn-ghost', 'btn-cyber', 'btn-liquid', 'btn-holo', 'btn-breathe', 'btn-pulse', 'btn-plasma', 'btn-spin', 'btn-3d', 'btn-echo'];
+        let activeBtnClass = 'btn-neon';
+        const tabPresetsArray = ['tab-underline', 'tab-box', 'tab-pill', 'tab-bracket', 'tab-dot', 'tab-fill-diag', 'tab-border-draw', 'tab-glow-pulse', 'tab-overline', 'tab-slash', 'tab-lift', 'tab-chevron', 'tab-glitch', 'tab-neon-block'];
+
+        function hexToRgba(hex, alpha) {
+            let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function makeDirectLink(url) {
+            if (!url) return '#';
+            let id = null;
+            let match1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            let match2 = url.match(/id=([a-zA-Z0-9_-]+)/);
+            
+            if (match1) id = match1[1];
+            else if (match2) id = match2[1];
+            
+            if (id) {
+                return `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${firebaseConfig.apiKey}`;
+            }
+            return url; 
+        }
+
+        const itemTypeSelect = document.getElementById('item-type');
+        itemTypeSelect.addEventListener('change', (e) => {
+            const type = e.target.value;
+            const tagInput = document.getElementById('item-tag');
+            const videoUrlInput = document.getElementById('item-video-url');
+            const platformInput = document.getElementById('item-platform');
+            const btnTextInput = document.getElementById('item-button-text');
+            const imageInput = document.getElementById('item-image');
+
+            tagInput.style.display = 'block'; tagInput.setAttribute('required', 'true');
+            videoUrlInput.style.display = 'block';
+            platformInput.style.display = 'none'; platformInput.removeAttribute('required'); platformInput.value = '';
+            btnTextInput.style.display = 'block'; btnTextInput.setAttribute('required', 'true');
+
+            if (type === 'plugins') {
+                tagInput.style.display = 'none'; tagInput.removeAttribute('required'); tagInput.value = '';
+                videoUrlInput.style.display = 'none'; videoUrlInput.value = '';
+            } else if (type === 'softwares') {
+                tagInput.style.display = 'none'; tagInput.removeAttribute('required'); tagInput.value = '';
+                videoUrlInput.style.display = 'none'; videoUrlInput.value = '';
+                btnTextInput.style.display = 'none'; btnTextInput.removeAttribute('required'); btnTextInput.value = '';
+                
+                platformInput.style.display = 'block'; platformInput.setAttribute('required', 'true');
+                imageInput.setAttribute('required', 'true'); 
+            } else {
+                imageInput.removeAttribute('required');
+            }
+        });
+        itemTypeSelect.dispatchEvent(new Event('change'));
+
+        function setAdminModeActive() {
+            document.querySelectorAll('.public-tab').forEach(tab => { tab.style.display = 'none'; });
+            document.querySelectorAll('.admin-tab').forEach(tab => { tab.style.display = 'inline-block'; });
+            switchTab('admin-manage');
+        }
+        if (localStorage.getItem('majorAdminAuth') === 'true') setAdminModeActive();
+
+        function switchTab(targetId) {
+            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            const targetLink = document.querySelector(`.tab-link[data-tab="${targetId}"]`);
+            if(targetLink) targetLink.classList.add('active');
+            document.getElementById(targetId).classList.add('active');
+        }
+        document.querySelectorAll('.tab-link').forEach(link => { link.addEventListener('click', () => switchTab(link.getAttribute('data-tab'))); });
+
+        document.getElementById('bg-grad-angle').addEventListener('input', (e) => document.getElementById('grad-angle-val').innerText = e.target.value);
+        document.getElementById('bg-glass-toggle').addEventListener('change', (e) => document.getElementById('glass-blur-group').style.display = e.target.checked ? 'block' : 'none');
+        document.getElementById('bg-glass-blur').addEventListener('input', (e) => document.getElementById('glass-blur-val').innerText = e.target.value);
+        document.getElementById('ui-glow-toggle').addEventListener('change', (e) => document.getElementById('ui-glow-group').style.display = e.target.checked ? 'flex' : 'none');
+        document.getElementById('ui-animation-duration').addEventListener('input', (e) => document.getElementById('anim-duration-val').innerText = e.target.value);
+        
+        document.getElementById('site-gradient-toggle').addEventListener('change', (e) => {
+            document.getElementById('rgb-colors-group').style.display = e.target.checked ? 'flex' : 'none';
+        });
+
+        document.querySelectorAll('input[name="bg-type"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const val = e.target.value;
+                document.getElementById('solid-group').style.display = val === 'solid' ? 'block' : 'none';
+                document.getElementById('gradient-group').style.display = val === 'gradient' ? 'flex' : 'none';
+                document.getElementById('media-group').style.display = (val === 'image' || val === 'video') ? 'block' : 'none';
+            });
+        });
+
+        function updateGlobalButtons() {
+            document.querySelectorAll('.glow-btn').forEach(btn => {
+                btnPresetsArray.forEach(p => btn.classList.remove(p));
+                btn.classList.add(activeBtnClass);
+            });
+        }
+
+        function applyBackground(config) {
+            const container = document.getElementById('bg-video-container');
+            const body = document.body;
+            
+            container.innerHTML = '';
+            container.style.background = '#0d0d12'; 
+            body.classList.remove('glass-mode', 'tab-glass', 'tab-glow', 'ui-glow', 'rgb-glow-mode', ...tabPresetsArray);
+            body.style.removeProperty('--glass-blur');
+
+            if (!config) return;
+
+            const font = config.fontFamily || 'Segoe UI';
+            if (font !== 'Segoe UI') {
+                let fontUrl = font.replace(/ /g, '+');
+                let link = document.getElementById('dynamic-google-font');
+                if (!link) {
+                    link = document.createElement('link');
+                    link.id = 'dynamic-google-font';
+                    link.rel = 'stylesheet';
+                    document.head.appendChild(link);
+                }
+                link.href = `https://fonts.googleapis.com/css2?family=${fontUrl}:wght@300;400;600;700&display=swap`;
+                document.documentElement.style.setProperty('--site-font', `'${font}', sans-serif`);
+            } else {
+                document.documentElement.style.setProperty('--site-font', `'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`);
+                const link = document.getElementById('dynamic-google-font');
+                if (link) link.remove();
+            }
+
+            if (config.type === 'solid') {
+                container.style.background = config.val1 || '#0d0d12';
+            } else if (config.type === 'gradient') {
+                container.style.background = `linear-gradient(${config.gradAngle || 135}deg, ${config.val1}, ${config.val2})`;
+            } else if (config.type === 'image' || config.type === 'video') {
+                const blurValue = config.mediaBlur || 0;
+                const scaleValue = blurValue > 0 ? 1.05 : 1; 
+                const filterStyle = `filter: blur(${blurValue}px); transform: scale(${scaleValue});`;
+
+                if (config.type === 'image') {
+                    container.innerHTML += `<div style="position:absolute; inset:0; width:100%; height:100%; background: url('${config.val1}') no-repeat center center/cover; opacity: ${config.mediaOpacity || 1}; ${filterStyle}"></div>`;
+                } else {
+                    container.innerHTML += `<video autoplay loop muted playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity: ${config.mediaOpacity || 1}; ${filterStyle}"><source src="${config.val1}"></video>`;
+                }
+                if (config.overlayOpacity > 0) {
+                    container.innerHTML += `<div style="position:absolute; inset:0; width:100%; height:100%; background: linear-gradient(135deg, ${config.overlay1}, ${config.overlay2}); opacity: ${config.overlayOpacity}; pointer-events:none;"></div>`;
+                }
+            }
+
+            if (config.glass) {
+                body.classList.add('glass-mode');
+                body.style.setProperty('--glass-blur', `${config.glassBlur || 15}px`);
+            }
+
+            const tabStyle = config.tabStyle || 'tab-underline';
+            body.classList.add(tabStyle);
+            
+            if (config.tabGlass) body.classList.add('tab-glass');
+            if (config.tabGlow) body.classList.add('tab-glow');
+
+            const animDuration = config.animDuration || '0.6';
+            document.documentElement.style.setProperty('--anim-duration', `${animDuration}s`);
+
+            const pColor = config.primaryColor || '#a855f7';
+            const gColor = config.uiGlowColor || '#a855f7';
+            
+            document.documentElement.style.setProperty('--ui-primary-hex', pColor);
+            document.documentElement.style.setProperty('--ui-glow-hex', gColor);
+            document.documentElement.style.setProperty('--apple-glow-color', hexToRgba(gColor, 1));
+
+            if (config.uiGlow) {
+                body.classList.add('ui-glow');
+                document.documentElement.style.setProperty('--ui-glow-rgba', hexToRgba(gColor, config.uiGlowOpacity || 0.4));
+                document.documentElement.style.setProperty('--ui-glow-spread', `${config.uiGlowSpread || 20}px`);
+            } else {
+                document.documentElement.style.setProperty('--ui-glow-rgba', hexToRgba(gColor, 0.5));
+            }
+
+            if (config.btnPreset) {
+                activeBtnClass = config.btnPreset;
+                updateGlobalButtons();
+            }
+
+            if (config.rgbGlow) {
+                const rc1 = config.rgbColor1 || '#ff007f';
+                const rc2 = config.rgbColor2 || '#a855f7';
+                const rc3 = config.rgbColor3 || '#00ffff';
+                
+                document.documentElement.style.setProperty('--rgb-c1', rc1);
+                document.documentElement.style.setProperty('--rgb-c2', rc2);
+                document.documentElement.style.setProperty('--rgb-c3', rc3);
+                
+                document.documentElement.style.setProperty('--rgb-rgba1', hexToRgba(rc1, 0.5));
+                document.documentElement.style.setProperty('--rgb-rgba2', hexToRgba(rc2, 0.5));
+                document.documentElement.style.setProperty('--rgb-rgba3', hexToRgba(rc3, 0.5));
+
+                body.classList.add('rgb-glow-mode');
+            }
+        }
+
+        document.getElementById('save-bg-btn').addEventListener('click', async () => {
+            const type = document.querySelector('input[name="bg-type"]:checked').value;
+            const config = { type };
+
+            if (type === 'solid') config.val1 = document.getElementById('bg-solid-color').value;
+            if (type === 'gradient') {
+                config.val1 = document.getElementById('bg-grad-1').value;
+                config.val2 = document.getElementById('bg-grad-2').value;
+                config.gradAngle = document.getElementById('bg-grad-angle').value;
+            }
+            if (type === 'image' || type === 'video') {
+                config.val1 = document.getElementById('bg-media-url').value;
+                config.mediaOpacity = document.getElementById('bg-media-opacity').value;
+                config.mediaBlur = document.getElementById('bg-media-blur').value; 
+                config.overlay1 = document.getElementById('bg-overlay-1').value;
+                config.overlay2 = document.getElementById('bg-overlay-2').value;
+                config.overlayOpacity = document.getElementById('bg-overlay-opacity').value;
+            }
+            
+            config.fontFamily = document.getElementById('site-font-preset').value;
+            
+            config.glass = document.getElementById('bg-glass-toggle').checked;
+            config.glassBlur = document.getElementById('bg-glass-blur').value;
+
+            config.tabStyle = document.getElementById('ui-tab-preset').value;
+            config.tabGlass = document.getElementById('tab-glass-toggle').checked;
+            config.tabGlow = document.getElementById('tab-glow-toggle').checked;
+
+            config.animPreset = document.getElementById('ui-animation-preset').value;
+            config.animDuration = document.getElementById('ui-animation-duration').value;
+            config.btnPreset = document.getElementById('ui-btn-preset').value; 
+
+            config.primaryColor = document.getElementById('ui-primary-color').value;
+            config.uiGlowColor = document.getElementById('ui-glow-color').value;
+            config.uiGlow = document.getElementById('ui-glow-toggle').checked;
+            config.uiGlowSpread = document.getElementById('ui-glow-spread').value;
+            config.uiGlowOpacity = document.getElementById('ui-glow-opacity').value;
+
+            config.rgbGlow = document.getElementById('site-gradient-toggle').checked;
+            config.rgbColor1 = document.getElementById('rgb-color-1').value;
+            config.rgbColor2 = document.getElementById('rgb-color-2').value;
+            config.rgbColor3 = document.getElementById('rgb-color-3').value;
+
+            try {
+                await setDoc(doc(db, "settings", "site_bg"), config);
+                applyBackground(config);
+                alert("Settings Updated! Visuals applied globally.");
+                loadSiteData(); 
+            } catch(err) { alert("Failed to save settings."); }
+        });
+
+        function applyFilters() {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            const filterValue = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.display = (filterValue === 'all' || card.getAttribute('data-tag') === filterValue) ? 'flex' : 'none';
+            });
+        }
+        function generateFilters(tagsArray) {
+            const filtersNav = document.getElementById('dynamic-filters');
+            let filterHTML = `<button class="filter-btn active" data-filter="all">All</button>`;
+            tagsArray.forEach(tag => { filterHTML += `<button class="filter-btn" data-filter="${tag}">${tag}</button>`; });
+            filtersNav.innerHTML = filterHTML;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyFilters();
+                });
+            });
+        }
+
+        async function loadSiteData() {
+            const gallery = document.getElementById('gallery');
+            const pluginGrid = document.getElementById('plugin-grid');
+            const softwareGrid = document.getElementById('software-grid');
+            const manageList = document.getElementById('manage-list');
+            
+            const spinnerHTML = `<div class="loader-container"><div class="spinner"></div><p style="margin-top:10px; color:#a0a0b0;">Loading...</p></div>`;
+            gallery.innerHTML = spinnerHTML; pluginGrid.innerHTML = spinnerHTML; softwareGrid.innerHTML = spinnerHTML; manageList.innerHTML = '';
+            
+            allData = { projects: [], plugins: [], softwares: [] };
+            let uniqueTags = new Set(); 
+            let animClass = 'anim-fade-down'; 
+
+            try {
+                const codeDoc = await getDoc(doc(db, "settings", "custom_code"));
+                if (codeDoc.exists() && codeDoc.data().css) {
+                    document.getElementById('dynamic-custom-css').innerText = codeDoc.data().css;
+                    document.getElementById('live-code-editor').value = codeDoc.data().css;
+                }
+            } catch (error) {}
+
+            try {
+                const bgDoc = await getDoc(doc(db, "settings", "site_bg"));
+                if (bgDoc.exists()) {
+                    const bgConfig = bgDoc.data();
+                    applyBackground(bgConfig); 
+                    
+                    document.querySelector(`input[name="bg-type"][value="${bgConfig.type}"]`).checked = true;
+                    document.querySelector(`input[name="bg-type"][value="${bgConfig.type}"]`).dispatchEvent(new Event('change'));
+                    
+                    if (bgConfig.type === 'solid') document.getElementById('bg-solid-color').value = bgConfig.val1;
+                    if (bgConfig.type === 'gradient') {
+                        document.getElementById('bg-grad-1').value = bgConfig.val1; document.getElementById('bg-grad-2').value = bgConfig.val2;
+                        document.getElementById('bg-grad-angle').value = bgConfig.gradAngle || 135; document.getElementById('grad-angle-val').innerText = bgConfig.gradAngle || 135;
+                    }
+                    if (bgConfig.type === 'image' || bgConfig.type === 'video') {
+                        document.getElementById('bg-media-url').value = bgConfig.val1; document.getElementById('bg-media-opacity').value = bgConfig.mediaOpacity || 1;
+                        document.getElementById('bg-media-blur').value = bgConfig.mediaBlur || 0; 
+                        document.getElementById('bg-overlay-1').value = bgConfig.overlay1 || '#0d0d12'; document.getElementById('bg-overlay-2').value = bgConfig.overlay2 || '#a855f7';
+                        document.getElementById('bg-overlay-opacity').value = bgConfig.overlayOpacity || 0;
+                    }
+
+                    document.getElementById('site-font-preset').value = bgConfig.fontFamily || 'Segoe UI';
+
+                    document.getElementById('bg-glass-toggle').checked = bgConfig.glass;
+                    if (bgConfig.glass) document.getElementById('glass-blur-group').style.display = 'block';
+                    document.getElementById('bg-glass-blur').value = bgConfig.glassBlur || 15; document.getElementById('glass-blur-val').innerText = bgConfig.glassBlur || 15;
+
+                    document.getElementById('ui-tab-preset').value = bgConfig.tabStyle || 'tab-underline';
+                    document.getElementById('tab-glass-toggle').checked = bgConfig.tabGlass;
+                    document.getElementById('tab-glow-toggle').checked = bgConfig.tabGlow;
+
+                    animClass = bgConfig.animPreset || 'anim-fade-down';
+                    document.getElementById('ui-animation-preset').value = animClass;
+                    
+                    document.getElementById('ui-animation-duration').value = bgConfig.animDuration || '0.6';
+                    document.getElementById('anim-duration-val').innerText = bgConfig.animDuration || '0.6';
+
+                    activeBtnClass = bgConfig.btnPreset || 'btn-neon';
+                    document.getElementById('ui-btn-preset').value = activeBtnClass;
+
+                    document.getElementById('ui-primary-color').value = bgConfig.primaryColor || '#a855f7';
+                    document.getElementById('ui-glow-color').value = bgConfig.uiGlowColor || '#a855f7';
+                    
+                    document.getElementById('ui-glow-toggle').checked = bgConfig.uiGlow;
+                    if (bgConfig.uiGlow) document.getElementById('ui-glow-group').style.display = 'flex';
+                    document.getElementById('ui-glow-spread').value = bgConfig.uiGlowSpread || 20;
+                    document.getElementById('ui-glow-opacity').value = bgConfig.uiGlowOpacity || 0.4;
+
+                    document.getElementById('site-gradient-toggle').checked = bgConfig.rgbGlow || false;
+                    document.getElementById('rgb-color-1').value = bgConfig.rgbColor1 || '#ff007f';
+                    document.getElementById('rgb-color-2').value = bgConfig.rgbColor2 || '#a855f7';
+                    document.getElementById('rgb-color-3').value = bgConfig.rgbColor3 || '#00ffff';
+                    
+                    if (bgConfig.rgbGlow) {
+                        document.getElementById('rgb-colors-group').style.display = 'flex';
+                    }
+
+                } else { applyBackground({type: 'solid', val1: '#0d0d12'}); }
+            } catch (error) {}
+
+            try {
+                let projectHTML = ''; let pluginHTML = ''; let softwareHTML = ''; let listHTML = ''; let animationDelay = 0;
+                
+                const querySnapshotProjects = await getDocs(collection(db, "projects"));
+                querySnapshotProjects.forEach((doc) => {
+                    const data = doc.data(); data.id = doc.id; data.dbType = 'projects'; allData.projects.push(data);
+                    if (data.tag) uniqueTags.add(data.tag);
+                    
+                    let previewBtnHTML = data.videoUrl ? `<a href="${data.videoUrl}" class="glow-btn small-glow ${activeBtnClass}" style="background: rgba(0,0,0,0.5); border-color: #4a4a5e; box-shadow: none;" target="_blank" rel="noopener noreferrer">Preview</a>` : '';
+                    
+                    projectHTML += `
+                        <article class="project-card ${animClass}" data-tag="${data.tag}" style="animation-delay: ${animationDelay}s;">
+                            <img src="${data.image}" alt="${data.name}" class="project-image">
+                            <div class="project-info">
+                                <h3>${data.name}</h3><p>${data.caption || ''}</p>
+                                <div class="card-footer"><span class="tech-tag">${data.tag}</span><div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">${previewBtnHTML}<a href="${makeDirectLink(data.url)}" class="glow-btn small-glow ${activeBtnClass}" target="_blank" rel="noopener noreferrer" download>${data.buttonText || 'Download'}</a></div></div>
+                            </div>
+                        </article>`;
+                    animationDelay += 0.1;
+                    listHTML += `<div class="manage-item"><div class="manage-info"><h4>${data.name} <span class="tech-tag" style="margin-left: 10px;">Project</span></h4><p>${data.tag}</p></div><div class="manage-actions"><button class="glow-btn small-glow ${activeBtnClass} manage-edit-btn" style="border-color: #3b82f6;" data-id="${data.id}" data-type="projects">Edit</button><button class="glow-btn small-glow ${activeBtnClass} manage-delete-btn" style="border-color: #ef4444;" data-id="${data.id}" data-type="projects">Delete</button></div></div>`;
+                });
+
+                animationDelay = 0;
+                const querySnapshotPlugins = await getDocs(collection(db, "plugins"));
+                querySnapshotPlugins.forEach((doc) => {
+                    const data = doc.data(); data.id = doc.id; data.dbType = 'plugins'; allData.plugins.push(data);
+                    
+                    let imgHTML = data.image ? `<img src="${data.image}" alt="${data.name}">` : '';
+                    
+                    pluginHTML += `
+                    <div class="plugin-card ${animClass}" style="animation-delay: ${animationDelay}s;">
+                        ${imgHTML}
+                        <div class="plugin-info">
+                            <h3>${data.name}</h3>
+                            <p>${data.caption || ''}</p>
+                            <div style="display: flex; gap: 0.5rem; margin-top: auto; flex-wrap: wrap;">
+                                <a href="${makeDirectLink(data.url)}" class="glow-btn ${activeBtnClass}" style="flex: 1; text-align: center;" target="_blank" rel="noopener noreferrer" download>${data.buttonText || 'Download Asset'}</a>
+                            </div>
+                        </div>
+                    </div>`;
+                    animationDelay += 0.1;
+                    listHTML += `<div class="manage-item"><div class="manage-info"><h4>${data.name} <span class="tech-tag" style="margin-left: 10px; background: #374151;">Plugin</span></h4></div><div class="manage-actions"><button class="glow-btn small-glow ${activeBtnClass} manage-edit-btn" style="border-color: #3b82f6;" data-id="${data.id}" data-type="plugins">Edit</button><button class="glow-btn small-glow ${activeBtnClass} manage-delete-btn" style="border-color: #ef4444;" data-id="${data.id}" data-type="plugins">Delete</button></div></div>`;
+                });
+
+                animationDelay = 0;
+                const querySnapshotSoftwares = await getDocs(collection(db, "softwares"));
+                querySnapshotSoftwares.forEach((doc) => {
+                    const data = doc.data(); data.id = doc.id; data.dbType = 'softwares'; allData.softwares.push(data);
+                    
+                    let imgHTML = data.image ? `<img src="${data.image}" alt="${data.name}">` : '';
+                    let platformTag = data.platform ? `<span class="tech-tag" style="margin-bottom: 0.5rem; display: inline-block;">${data.platform}</span>` : '';
+                    
+                    softwareHTML += `
+                    <div class="software-card ${animClass}" style="animation-delay: ${animationDelay}s;">
+                        ${imgHTML}
+                        <div class="software-info">
+                            <h3>${data.name}</h3>
+                            ${platformTag}
+                            <p>${data.caption || ''}</p>
+                            <div style="display: flex; gap: 0.5rem; margin-top: auto; flex-wrap: wrap;">
+                                <a href="${makeDirectLink(data.url)}" class="glow-btn ${activeBtnClass}" style="flex: 1; text-align: center;" target="_blank" rel="noopener noreferrer" download>Download</a>
+                            </div>
+                        </div>
+                    </div>`;
+                    animationDelay += 0.1;
+                    listHTML += `<div class="manage-item"><div class="manage-info"><h4>${data.name} <span class="tech-tag" style="margin-left: 10px; background: #10b981;">Software</span></h4></div><div class="manage-actions"><button class="glow-btn small-glow ${activeBtnClass} manage-edit-btn" style="border-color: #3b82f6;" data-id="${data.id}" data-type="softwares">Edit</button><button class="glow-btn small-glow ${activeBtnClass} manage-delete-btn" style="border-color: #ef4444;" data-id="${data.id}" data-type="softwares">Delete</button></div></div>`;
+                });
+
+                gallery.innerHTML = projectHTML; 
+                pluginGrid.innerHTML = pluginHTML; 
+                softwareGrid.innerHTML = softwareHTML;
+                manageList.innerHTML = listHTML;
+                
+                generateFilters(Array.from(uniqueTags)); applyFilters();
+                updateGlobalButtons(); 
+            } catch (error) { gallery.innerHTML = "<p>Error loading posts.</p>"; }
+        }
+
+        document.body.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('manage-delete-btn')) {
+                const id = e.target.getAttribute('data-id'); const type = e.target.getAttribute('data-type');
+                if(confirm("Delete this post forever?")) { try { await deleteDoc(doc(db, type, id)); loadSiteData(); } catch (error) { alert("Failed to delete."); } }
+            }
+            if (e.target.classList.contains('manage-edit-btn')) {
+                const id = e.target.getAttribute('data-id'); const type = e.target.getAttribute('data-type');
+                const itemData = allData[type].find(item => item.id === id);
+                if(itemData) {
+                    document.getElementById('edit-id').value = itemData.id; 
+                    document.getElementById('item-type').value = type; 
+                    document.getElementById('item-type').disabled = true;
+                    document.getElementById('item-type').dispatchEvent(new Event('change')); 
+                    
+                    document.getElementById('item-name').value = itemData.name; 
+                    document.getElementById('item-tag').value = itemData.tag || ''; 
+                    document.getElementById('item-platform').value = itemData.platform || ''; 
+                    document.getElementById('item-caption').value = itemData.caption || '';
+                    document.getElementById('item-button-text').value = itemData.buttonText || ''; 
+                    document.getElementById('item-video-url').value = itemData.videoUrl || ''; 
+                    document.getElementById('item-image').value = itemData.image || ''; 
+                    document.getElementById('item-url').value = itemData.url;
+                    
+                    document.getElementById('form-title').innerText = "Edit Asset"; 
+                    document.getElementById('form-submit-btn').innerText = "Update Post"; 
+                    document.getElementById('cancel-edit-btn').style.display = "block";
+                    switchTab('admin-upload');
+                }
+            }
+        });
+
+        document.getElementById('cancel-edit-btn').addEventListener('click', () => {
+            document.getElementById('admin-form').reset(); 
+            document.getElementById('edit-id').value = ''; 
+            document.getElementById('item-type').disabled = false;
+            document.getElementById('item-type').value = 'projects';
+            document.getElementById('item-type').dispatchEvent(new Event('change'));
+            
+            document.getElementById('form-title').innerText = "Upload New Asset"; 
+            document.getElementById('form-submit-btn').innerText = "Publish to Site"; 
+            document.getElementById('cancel-edit-btn').style.display = "none";
+            switchTab('admin-manage');
+        });
+
+        document.getElementById('admin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('edit-id').value; 
+            const type = document.getElementById('item-type').value; 
+            
+            const imgInput = document.getElementById('item-image').value;
+            const finalImage = imgInput ? imgInput : ((type === 'projects' || type === 'softwares') ? 'https://placehold.co/600x338/2a2a36/a0a0b0?text=No+Preview' : '');
+
+            const payload = {
+                name: document.getElementById('item-name').value, 
+                tag: document.getElementById('item-tag').value, 
+                platform: document.getElementById('item-platform').value,
+                caption: document.getElementById('item-caption').value,
+                buttonText: document.getElementById('item-button-text').value, 
+                videoUrl: document.getElementById('item-video-url').value,
+                image: finalImage, 
+                url: document.getElementById('item-url').value
+            };
+            try {
+                if (editId) await updateDoc(doc(db, type, editId), payload); else await addDoc(collection(db, type), payload);
+                document.getElementById('cancel-edit-btn').click(); loadSiteData(); 
+            } catch (error) { alert("Error saving to database."); }
+        });
+
+        document.getElementById('save-code-btn').addEventListener('click', async () => {
+            const codeInput = document.getElementById('live-code-editor').value;
+            try { await setDoc(doc(db, "settings", "custom_code"), { css: codeInput }, { merge: true }); document.getElementById('dynamic-custom-css').innerText = codeInput; alert("Code saved and injected!"); } catch (error) { alert("Failed to save code."); }
+        });
+        document.getElementById('update-password-btn').addEventListener('click', async () => {
+            const newPassword = document.getElementById('new-admin-password').value;
+            if(!newPassword) return;
+            try { await setDoc(doc(db, "settings", "admin_config"), { password: newPassword }, { merge: true }); alert("Password changed!"); document.getElementById('new-admin-password').value = ''; } catch (error) { alert("Failed to update password."); }
+        });
+
+        const passwordModal = document.getElementById('password-modal');
+        document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.key.toLowerCase() === 'h') { e.preventDefault(); passwordModal.classList.add('active'); } });
+        document.getElementById('close-password').addEventListener('click', () => { passwordModal.classList.remove('active'); });
+        document.getElementById('password-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); const passInput = document.getElementById('admin-password').value; let realPassword = 'major'; 
+            try { const passDoc = await getDoc(doc(db, "settings", "admin_config")); if (passDoc.exists() && passDoc.data().password) realPassword = passDoc.data().password; } catch (err) {}
+            if (passInput === realPassword) { passwordModal.classList.remove('active'); localStorage.setItem('majorAdminAuth', 'true'); setAdminModeActive(); document.getElementById('admin-password').value = ''; } else { alert("Incorrect!"); document.getElementById('admin-password').value = ''; }
+        });
+        document.getElementById('exit-admin-btn').addEventListener('click', () => {
+            localStorage.removeItem('majorAdminAuth'); document.querySelectorAll('.admin-tab').forEach(tab => { tab.style.display = 'none'; }); document.querySelectorAll('.public-tab').forEach(tab => { tab.style.display = 'inline-block'; }); switchTab('projects');
+        });
+
+        loadSiteData(); 
+    </script>
+</body>
+</html>
