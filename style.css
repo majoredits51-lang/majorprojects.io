@@ -515,3 +515,68 @@ body.rgb-glow-mode .glow-btn { animation: rgb-btn-glow 4s linear infinite; }
 @keyframes efx-wander { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, -50px); } }
 @keyframes efx-spin-fall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(720deg); } }
 @keyframes efx-drift { 0% { transform: translate(-20px, -20px); } 100% { transform: translate(20px, 20px); } }
+/* ========================================= */
+/* --- GLOWING GRADIENT TOGGLE & EFFECT --- */
+/* ========================================= */
+.gradient-toggle-wrapper { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
+.gradient-toggle { appearance: none; -webkit-appearance: none; width: 50px; height: 26px; background: #050505; border: 2px solid #333; border-radius: 50px; position: relative; cursor: pointer; outline: none; transition: all 0.3s ease; }
+.gradient-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: #a0a0b0; border-radius: 50%; transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
+.gradient-toggle:checked { border-color: transparent; background: linear-gradient(90deg, var(--rgb-c1), var(--rgb-c2), var(--rgb-c3)); background-size: 200% 200%; animation: toggle-gradient 3s ease infinite; box-shadow: 0 0 15px var(--rgb-rgba2); }
+.gradient-toggle:checked::after { left: 26px; background: #fff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
+
+@keyframes toggle-gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+body.rgb-glow-mode .ui-glow .project-card, body.rgb-glow-mode .ui-glow .plugin-card, body.rgb-glow-mode .ui-glow .software-card, body.rgb-glow-mode .ui-glow .admin-box { animation: rgb-box-glow 4s linear infinite; }
+body.rgb-glow-mode .glow-btn { animation: rgb-btn-glow 4s linear infinite; }
+
+@keyframes rgb-box-glow {
+    0% { box-shadow: 0 0 var(--ui-glow-spread) var(--rgb-rgba1); border-color: var(--rgb-c1); }
+    33% { box-shadow: 0 0 var(--ui-glow-spread) var(--rgb-rgba2); border-color: var(--rgb-c2); }
+    66% { box-shadow: 0 0 var(--ui-glow-spread) var(--rgb-rgba3); border-color: var(--rgb-c3); }
+    100% { box-shadow: 0 0 var(--ui-glow-spread) var(--rgb-rgba1); border-color: var(--rgb-c1); }
+}
+
+@keyframes rgb-btn-glow {
+    0% { box-shadow: 0 0 15px var(--rgb-rgba1); border-color: var(--rgb-c1); }
+    33% { box-shadow: 0 0 15px var(--rgb-rgba2); border-color: var(--rgb-c2); }
+    66% { box-shadow: 0 0 15px var(--rgb-rgba3); border-color: var(--rgb-c3); }
+    100% { box-shadow: 0 0 15px var(--rgb-rgba1); border-color: var(--rgb-c1); }
+}
+
+/* ========================================= */
+/* --- GLOBAL VISUAL EFFECTS ENGINE --- */
+/* ========================================= */
+#global-effects-layer {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden;
+}
+
+/* Snow */
+.efx-snow { position: absolute; top: -10px; background: #fff; border-radius: 50%; animation: efx-fall linear infinite; }
+/* Rain */
+.efx-rain { position: absolute; top: -20px; width: 1px; height: 30px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8)); animation: efx-fall linear infinite; }
+/* Bubble */
+.efx-bubble { position: absolute; bottom: -20px; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; animation: efx-float-up linear infinite; }
+/* Star */
+.efx-star { position: absolute; background: #fff; border-radius: 50%; animation: efx-twinkle ease-in-out infinite alternate; }
+/* Firefly */
+.efx-firefly { position: absolute; width: 4px; height: 4px; background: #ccff00; border-radius: 50%; box-shadow: 0 0 10px #ccff00; animation: efx-wander ease-in-out infinite alternate; }
+/* Confetti */
+.efx-confetti { position: absolute; top: -10px; width: 8px; height: 16px; animation: efx-spin-fall linear infinite; }
+/* Matrix */
+.efx-matrix { position: absolute; top: -20px; color: #0f0; font-family: monospace; font-weight: bold; text-shadow: 0 0 5px #0f0; opacity: 0.8; animation: efx-fall linear infinite; }
+/* Dust */
+.efx-dust { position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(5px); animation: efx-drift linear infinite alternate; }
+/* Light Leaks */
+.efx-leak { position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(80px); animation: efx-drift linear infinite alternate; mix-blend-mode: screen; }
+
+/* Static Overlay Maps */
+.efx-scanlines { background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.1) 3px, rgba(0,0,0,0.1) 4px); z-index: 9999 !important; }
+.efx-vignette { box-shadow: inset 0 0 200px rgba(0,0,0,0.9); z-index: 9999 !important; }
+
+/* Engine Keyframes */
+@keyframes efx-fall { to { transform: translateY(110vh); } }
+@keyframes efx-float-up { to { transform: translateY(-110vh); } }
+@keyframes efx-twinkle { 0% { opacity: 0.1; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 5px #fff; } }
+@keyframes efx-wander { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, -50px); } }
+@keyframes efx-spin-fall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(720deg); } }
+@keyframes efx-drift { 0% { transform: translate(-20px, -20px); } 100% { transform: translate(20px, 20px); } }
