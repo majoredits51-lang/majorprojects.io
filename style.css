@@ -15,16 +15,19 @@
     --rgb-rgba2: rgba(168, 85, 247, 0.5);
     --rgb-rgba3: rgba(0, 255, 255, 0.5);
 
-    /* Dynamic Variables */
+    /* Dynamic Typography & App Variables */
     --anim-duration: 0.6s;
     --site-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --site-font-size: 1rem;
+    --site-font-spacing: 0px;
+    --ui-global-opacity: 1;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: inherit; /* Now inherits dynamically from body */
+    font-family: inherit; 
 }
 
 html {
@@ -35,7 +38,15 @@ body {
     background-color: transparent !important;
     color: #f1f1f1;
     line-height: 1.6;
-    font-family: var(--site-font); /* Uses injected Google Font */
+    font-family: var(--site-font); 
+    font-size: var(--site-font-size);
+    letter-spacing: var(--site-font-spacing);
+}
+
+/* --- APP TRANSPARENCY CONTROLLER --- */
+.main-tabs, .hero, .tab-content {
+    opacity: var(--ui-global-opacity);
+    transition: opacity 0.3s ease;
 }
 
 /* --- TAB NAVIGATION SYSTEM --- */
@@ -313,21 +324,16 @@ body.glass-mode .admin-box {
     border: 1px solid rgba(255,255,255,0.1) !important; 
 }
 
-
 /* ========================================= */
-/* --- 14 TAB ANIMATION PRESETS --- */
+/* --- 26 TAB ANIMATION PRESETS --- */
 /* ========================================= */
 
-/* Global Glass/Glow Application for ALL tabs */
 body.tab-glass .tab-link.active { backdrop-filter: blur(10px); background: rgba(255,255,255,0.08); border-radius: 4px; }
 body.tab-glow .tab-link.active { box-shadow: 0 0 15px var(--ui-glow-rgba, rgba(168,85,247,0.4)); border-radius: 4px; }
 
 /* 1. tab-underline (Classic) */
 body.tab-underline .tab-link { position: relative; padding-bottom: 0.5rem; }
-body.tab-underline .tab-link::after {
-    content: ''; position: absolute; width: 100%; height: 2px; bottom: 0; left: 0;
-    background-color: var(--ui-primary-hex); transform: scaleX(0); transition: transform 0.3s ease; transform-origin: center;
-}
+body.tab-underline .tab-link::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: 0; left: 0; background-color: var(--ui-primary-hex); transform: scaleX(0); transition: transform 0.3s ease; transform-origin: center; }
 body.tab-underline .tab-link:hover::after, body.tab-underline .tab-link.active::after { transform: scaleX(1); }
 
 /* 2. tab-box (Classic) */
@@ -371,10 +377,7 @@ body.tab-glow-pulse .tab-link:hover, body.tab-glow-pulse .tab-link.active { colo
 
 /* 9. tab-overline */
 body.tab-overline .tab-link { position: relative; padding-top: 0.5rem; }
-body.tab-overline .tab-link::before {
-    content: ''; position: absolute; width: 100%; height: 2px; top: -5px; left: 0;
-    background-color: var(--ui-primary-hex); opacity: 0; transform: translateY(-10px); transition: all 0.3s ease;
-}
+body.tab-overline .tab-link::before { content: ''; position: absolute; width: 100%; height: 2px; top: -5px; left: 0; background-color: var(--ui-primary-hex); opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
 body.tab-overline .tab-link:hover::before, body.tab-overline .tab-link.active::before { opacity: 1; transform: translateY(0); }
 
 /* 10. tab-slash */
@@ -402,6 +405,66 @@ body.tab-glitch .tab-link.active { color: #fff; animation: tab-glitch-anim 2s in
 /* 14. tab-neon-block */
 body.tab-neon-block .tab-link { padding: 0.5rem 1rem; transition: all 0.3s; border-radius: 4px; }
 body.tab-neon-block .tab-link.active { background: var(--ui-primary-hex); color: #000 !important; box-shadow: 0 0 15px var(--ui-glow-hex); text-shadow: none; font-weight: bold; }
+
+/* 15. tab-cyber-slice */
+body.tab-cyber-slice .tab-link { position: relative; padding: 0.5rem 1.5rem; transition: color 0.3s; z-index: 1;}
+body.tab-cyber-slice .tab-link::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--ui-primary-hex); z-index: -1; transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+body.tab-cyber-slice .tab-link:hover::before, body.tab-cyber-slice .tab-link.active::before { transform: scaleX(1); transform-origin: left; }
+body.tab-cyber-slice .tab-link.active { color: #000; font-weight: bold; }
+
+/* 16. tab-neon-border */
+body.tab-neon-border .tab-link { padding: 0.5rem 1rem; border: 2px solid transparent; border-radius: 4px; transition: all 0.3s; }
+body.tab-neon-border .tab-link:hover, body.tab-neon-border .tab-link.active { border-color: var(--ui-primary-hex); box-shadow: inset 0 0 10px var(--ui-glow-rgba), 0 0 10px var(--ui-glow-rgba); color: #fff; }
+
+/* 17. tab-ghost-glow */
+body.tab-ghost-glow .tab-link { padding: 0.5rem 1.2rem; border-radius: 50px; transition: all 0.5s ease; background: transparent; }
+body.tab-ghost-glow .tab-link.active { background: var(--ui-glow-rgba); backdrop-filter: blur(8px); box-shadow: 0 0 20px var(--ui-glow-rgba); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+
+/* 18. tab-flip */
+body.tab-flip .tab-link { padding: 0.5rem 1rem; transition: transform 0.6s; transform-style: preserve-3d; perspective: 1000px; }
+body.tab-flip .tab-link.active { transform: rotateX(360deg); color: var(--ui-primary-hex); text-shadow: 0 0 8px var(--ui-glow-hex); }
+
+/* 19. tab-scale */
+body.tab-scale .tab-link { padding: 0.5rem 1rem; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s; }
+body.tab-scale .tab-link:hover, body.tab-scale .tab-link.active { transform: scale(1.15); color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+/* 20. tab-underline-split */
+body.tab-underline-split .tab-link { position: relative; padding-bottom: 0.5rem; }
+body.tab-underline-split .tab-link::before, body.tab-underline-split .tab-link::after { content: ''; position: absolute; bottom: 0; width: 0; height: 2px; background-color: var(--ui-primary-hex); transition: width 0.3s ease; }
+body.tab-underline-split .tab-link::before { left: 50%; }
+body.tab-underline-split .tab-link::after { right: 50%; }
+body.tab-underline-split .tab-link:hover::before, body.tab-underline-split .tab-link.active::before,
+body.tab-underline-split .tab-link:hover::after, body.tab-underline-split .tab-link.active::after { width: 50%; }
+
+/* 21. tab-strikethrough */
+body.tab-strikethrough .tab-link { position: relative; padding: 0.5rem; transition: color 0.3s; }
+body.tab-strikethrough .tab-link::before { content: ''; position: absolute; top: 50%; left: 0; width: 0; height: 2px; background: var(--ui-primary-hex); transition: width 0.3s ease; transform: translateY(-50%); box-shadow: 0 0 5px var(--ui-glow-hex); }
+body.tab-strikethrough .tab-link:hover::before, body.tab-strikethrough .tab-link.active::before { width: 100%; }
+body.tab-strikethrough .tab-link.active { color: #fff; }
+
+/* 22. tab-gradient-text */
+body.tab-gradient-text .tab-link { padding: 0.5rem; font-weight: bold; transition: all 0.3s; }
+body.tab-gradient-text .tab-link.active { background: linear-gradient(90deg, #ff007f, var(--ui-primary-hex), #00ffff); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: gradient-text-anim 2s linear infinite; }
+@keyframes gradient-text-anim { to { background-position: 200% center; } }
+
+/* 23. tab-shadow-pop */
+body.tab-shadow-pop .tab-link { padding: 0.5rem 1.2rem; border: 1px solid #333; border-radius: 4px; transition: all 0.2s; background: #1a1a24; }
+body.tab-shadow-pop .tab-link:hover, body.tab-shadow-pop .tab-link.active { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--ui-primary-hex); border-color: var(--ui-primary-hex); color: #fff; }
+
+/* 24. tab-floating-dot */
+body.tab-floating-dot .tab-link { position: relative; padding-top: 1rem; transition: color 0.3s; }
+body.tab-floating-dot .tab-link::before { content: ''; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--ui-primary-hex); opacity: 0; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+body.tab-floating-dot .tab-link:hover::before, body.tab-floating-dot .tab-link.active::before { opacity: 1; top: -5px; box-shadow: 0 0 8px var(--ui-glow-hex); }
+
+/* 25. tab-pixel */
+body.tab-pixel .tab-link { padding: 0.5rem 1.2rem; transition: all 0.2s; background: transparent; border: none; }
+body.tab-pixel .tab-link.active { box-shadow: inset 2px 2px 0px 0px var(--ui-primary-hex), inset -2px -2px 0px 0px var(--ui-primary-hex); color: #fff; background: rgba(0,0,0,0.5); font-family: monospace; letter-spacing: 2px; }
+
+/* 26. tab-underline-up */
+body.tab-underline-up .tab-link { position: relative; padding: 0.5rem 0; }
+body.tab-underline-up .tab-link::after { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--ui-primary-hex); transition: all 0.3s ease; }
+body.tab-underline-up .tab-link:hover::after, body.tab-underline-up .tab-link.active::after { bottom: 100%; opacity: 0.5; box-shadow: 0 0 10px var(--ui-glow-hex); }
+
 
 /* ========================================= */
 /* --- CARD ENTRANCE ANIMATION PRESETS --- */
@@ -437,11 +500,9 @@ body.tab-neon-block .tab-link.active { background: var(--ui-primary-hex); color:
 .anim-spin-in { transform: rotate(-180deg) scale(0.5); animation-name: kf-spin-in; }
 @keyframes kf-spin-in { to { opacity: 1; transform: rotate(0) scale(1); } }
 
-
 /* ========================================= */
 /* --- BUTTON HOVER ANIMATION PRESETS --- */
 /* ========================================= */
-
 .glow-btn {
     display: inline-block;
     padding: 12px 24px;
